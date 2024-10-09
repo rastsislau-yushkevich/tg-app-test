@@ -1,4 +1,4 @@
-import { Map, Placemark } from '@pbe/react-yandex-maps';
+import { GeolocationControl, Map, Placemark } from '@pbe/react-yandex-maps';
 import { useEffect, useState } from 'react';
 
 export const YandexMap = () => {
@@ -17,7 +17,8 @@ export const YandexMap = () => {
 		<div>
 			{position && (
 				<Map defaultState={{ center: position, zoom: 15 }}>
-					<Placemark defaultGeometry={position} />
+					{/* <Placemark defaultGeometry={position} /> */}
+					<GeolocationControl />
 				</Map>
 			)}
 		</div>
