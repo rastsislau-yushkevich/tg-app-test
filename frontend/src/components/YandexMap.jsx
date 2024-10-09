@@ -17,7 +17,7 @@ export const YandexMap = () => {
 		<div>
 			{position && (
 				<Map defaultState={{ center: position, zoom: 15 }}>
-					{/* <Placemark defaultGeometry={position} /> */}
+					<Placemark defaultGeometry={position} />
 					<GeolocationControl />
 				</Map>
 			)}
