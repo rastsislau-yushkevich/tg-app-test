@@ -1,32 +1,26 @@
-import {
-	YMap,
-	YMapDefaultSchemeLayer,
-	YMapDefaultFeaturesLayer,
-	YMapMarker,
-	reactify,
-} from '../libs/ymaps';
+import { GeolocationControl, Map, Placemark } from '@pbe/react-yandex-maps';
+import { useEffect, useState } from 'react';
 
-export const YandexMap = ({ lat, lng }) => {
-	const LOCATION = {
-		center: [lng, lat],
-		zoom: 15,
-	};
-	console.log('render');
+export const YandexMap = () => {
+	const [position, setPosition] = useState([]);
+
+	useEffect(() => {
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				setPosition([position.coords.latitude, position.coords.longitude]);
+			},
+			(err) => console.log(err)
+		);
+	}, []);
+
 	return (
-		<div style={{ width: '600px', height: '400px' }}>
-			<YMap location={LOCATION}>
-				<YMapDefaultSchemeLayer />
-				<YMapDefaultFeaturesLayer />
-
-				<YMapMarker
-					coordinates={[lng, lat]}
-					// draggable={true}
-				>
-					<section>
-						<h1>You</h1>
-					</section>
-				</YMapMarker>
-			</YMap>
+		<div>
+			{position && (
+				<Map defaultState={{ center: position, zoom: 15 }}>
+					<Placemark defaultGeometry={position} />
+					<GeolocationControl />
+				</Map>
+			)}
 		</div>
 	);
 };
