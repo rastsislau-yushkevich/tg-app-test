@@ -1,23 +1,14 @@
 import { GeolocationControl, Map, Placemark } from '@pbe/react-yandex-maps';
-import { useEffect, useState } from 'react';
+import { useGetLocation } from '../hooks/useGetLocation';
 
 export const YandexMap = () => {
-	const [position, setPosition] = useState([]);
-
-	useEffect(() => {
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
-				setPosition([position.coords.latitude, position.coords.longitude]);
-			},
-			(err) => console.log(err)
-		);
-	}, []);
+	const { location, isLoading } = useGetLocation();
 
 	return (
 		<div>
-			{position && (
-				<Map defaultState={{ center: position, zoom: 15 }}>
-					<Placemark defaultGeometry={position} />
+			{!isLoading && location.lat && (
+				<Map defaultState={{ center: [location.lat, location.lng], zoom: 15 }}>
+					<Placemark defaultGeometry={[location.lat, location.lng]} />
 					<GeolocationControl />
 				</Map>
 			)}
