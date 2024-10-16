@@ -8,8 +8,6 @@ const GoogleMap = () => {
 	const [places, setPlaces] = useState([]);
 	const placesService = usePlacesService();
 
-	console.log(placesService);
-
 	useEffect(() => {
 		if (placesService) {
 			placesService.nearbySearch(
@@ -18,7 +16,7 @@ const GoogleMap = () => {
 			);
 		}
 	}, [placesService]);
-	console.log(places);
+
 	return (
 		<div>
 			{!isLoading && location.lat && (
